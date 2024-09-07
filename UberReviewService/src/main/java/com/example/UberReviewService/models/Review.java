@@ -1,9 +1,11 @@
 package com.example.UberReviewService.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
 
@@ -12,6 +14,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 //table(name = "bookingreview")
 public class Review {
@@ -20,7 +23,7 @@ public class Review {
     Long id;
 
     @Column(nullable = false)
-    String Content;
+    String content;
 
     Double rating;
 
@@ -33,4 +36,11 @@ public class Review {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     Date updatedAt;
+
+
+
+    public String toString(){
+        return "review :" + this.content + " " + this.rating + " " + this.createdAt;
+    }
+
 }
