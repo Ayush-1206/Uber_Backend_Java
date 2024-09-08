@@ -1,18 +1,23 @@
 package com.example.UberReviewService.services;
 
+import com.example.UberReviewService.models.Booking;
 import com.example.UberReviewService.models.Review;
+import com.example.UberReviewService.repository.BookingRepository;
 import com.example.UberReviewService.repository.ReviewRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.sql.SQLOutput;
 @Service
 public class ReviewService implements CommandLineRunner{
     private ReviewRepository reviewRepository;
+    private BookingRepository bookingRepository;
 
-    public ReviewService(ReviewRepository reviewRepository){
+    public ReviewService(ReviewRepository reviewRepository,  BookingRepository bookingRepository){
         this.reviewRepository = reviewRepository;
+        this.bookingRepository = bookingRepository;
     }
 
     @Override
@@ -20,7 +25,10 @@ public class ReviewService implements CommandLineRunner{
         System.out.println("***********");
         Review r = Review.builder().content("amnbb").rating(4.0).build();
         System.out.println(r);
-        reviewRepository.save(r);
+        Booking b = Booking.builder().review(r).build();
+
+        bookingRepository.save(b);
+//        reviewRepository.save(r);
 
     }
 }
